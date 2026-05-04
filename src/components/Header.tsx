@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SuperGritLogo from '../../public/assets/Super Grit.svg'; // Make sure this path matches your logo location
+import SuperGritLogo from '../assets/Super Grit.svg'; // Make sure this path matches your logo location
 
 export interface CartItem {
   id: number;

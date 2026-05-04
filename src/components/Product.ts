@@ -1,15 +1,15 @@
 // src/data/products.ts
 
 // Product 1 (Box) Images
-import boxMain from '../../public/assets/bottel2.png';
-import boxThumb1 from '../../public/assets/bottel4.png';
-import boxThumb2 from '../../public/assets/bottel3.png';
+import boxMain from '../assets/bottel2.png';
+import boxThumb1 from '../assets/bottel4.png';
+import boxThumb2 from '../assets/bottel3.png';
 
 
 // Product 2 (Bottle) Images
-import bottleMain from '../../public/assets/cigarette2.png';
-import bottleThumb1 from '../../public/assets/product2.png';
-import bottleThumb2 from '../../public/assets/cigarette3.png';
+import bottleMain from '../assets/cigarette2.png';
+import bottleThumb1 from '../assets/product2.png';
+import bottleThumb2 from '../assets/cigarette3.png';
 
 
 export const products = [
