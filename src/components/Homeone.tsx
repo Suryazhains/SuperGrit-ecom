@@ -25,7 +25,13 @@ export interface CartItem {
 const Homeone: React.FC = () => {
   const navigate = useNavigate();
   const banners = [ourbanner, ourbanner2, ourbanner3];
-  const [currentBanner, setCurrentBanner] = useState(0);
+  
+  // Carousel States
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
+  // We add a clone of the first banner to the end to create an infinite right-to-left loop
+  const extendedBanners = [...banners, banners[0]];
 
   // Local Sync State
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -42,13 +48,28 @@ const Homeone: React.FC = () => {
     return () => window.removeEventListener('cartUpdated', loadCart);
   }, []);
 
-  // Banner Rotation
+  // 1. Infinite Loop Interval (Speed increased: Stays on screen for 3 seconds)
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentBanner((prevIndex) => (prevIndex + 1) % banners.length);
-    }, 2000);
+      setIsTransitioning(true);
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }, 3000); 
+    
     return () => clearInterval(interval);
-  }, [banners.length]);
+  }, []);
+
+  // 2. The "Invisible Snap" to reset the loop
+  useEffect(() => {
+    if (currentIndex === banners.length) {
+      // Once it slides to the cloned first banner, wait for the animation to finish
+      const timeout = setTimeout(() => {
+        setIsTransitioning(false); // Turn off the slide animation
+        setCurrentIndex(0); // Instantly snap back to the REAL first banner
+      }, 800); // 800ms perfectly matches the 0.8s transition duration below
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, banners.length]);
 
   const updateCartQuantity = (e: React.MouseEvent, itemId: number, type: 'increase' | 'decrease') => {
     e.stopPropagation(); 
@@ -90,20 +111,28 @@ const Homeone: React.FC = () => {
       <Header />
       
       <main className="flex-grow w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 flex flex-col gap-10 md:gap-14">
-        {/* Banner Section */}
+        
+        {/* Banner Section - Sped up for a snappier feel */}
         <div className="relative w-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm bg-white aspect-[16/9] md:aspect-[1216/628]">
-          {banners.map((img, index) => (
-            <img 
-              key={index}
-              src={img} 
-              alt={`Launch Offer - Banner ${index + 1}`} 
-              fetchPriority={index === 0 ? "high" : "auto"}
-              loading={index === 0 ? "eager" : "lazy"}
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-                index === currentBanner ? 'opacity-100 z-10' : 'opacity-0 z-0'
-              }`}
-            />
-          ))}
+          <div 
+            className="flex h-full w-full"
+            style={{ 
+              transform: `translateX(-${currentIndex * 100}%)`,
+              // Slide speed changed to 0.8s for a faster right-to-left sweep
+              transition: isTransitioning ? 'transform 0.8s ease-in-out' : 'none' 
+            }}
+          >
+            {extendedBanners.map((img, index) => (
+              <img 
+                key={index}
+                src={img} 
+                alt={`Launch Offer - Banner`} 
+                fetchPriority={index === 0 ? "high" : "auto"}
+                loading={index === 0 ? "eager" : "lazy"}
+                className="w-full h-full flex-shrink-0 object-cover"
+              />
+            ))}
+          </div>
         </div>
 
         {/* Product Cards */}
@@ -124,7 +153,7 @@ const Homeone: React.FC = () => {
                     src={product.image} 
                     alt={product.name} 
                     loading="eager" 
-                    fetchPriority="high" /* Added high priority for faster loading */
+                    fetchPriority="high"
                     className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${product.bgClass === 'bg-black' ? 'opacity-90' : ''}`} 
                   />
                 </div>
