@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-// Import Header and Footer
 import Header from './Header'; 
-import Footer from './footer'; // Make sure this matches your actual footer file name
+import Footer from './footer'; 
 import { products } from './Product';
 
-// Define the CartItem interface
 export interface CartItem {
   id: number;
   name: string;
@@ -25,11 +23,14 @@ const ProductPage: React.FC = () => {
   const [localQuantity, setLocalQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('Description');
   const [mainImg, setMainImg] = useState('');
-  
-  // Cart State to sync with Header and Homeone
+
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // 1. Load the cart from LocalStorage to know what's already inside
+  // 1. NEW ADDITION: Always scroll to top when page loads or product ID changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   const loadCart = () => {
     const saved = localStorage.getItem('superGritCart');
     if (saved) {
@@ -96,13 +97,10 @@ const ProductPage: React.FC = () => {
     }
   };
 
-  // ADD TO CART LOGIC (First Click vs Second Click)
   const handleAddToCart = () => {
     if (isInCart) {
-      // SECOND CLICK: The button says "Go to Cart". Clicking it ONLY opens the sidebar!
       window.dispatchEvent(new Event('openCartDrawer'));
     } else {
-      // FIRST CLICK: The button says "Add to Cart". Add it to storage and instantly change the word!
       const updated = [...cartItems, {
         id: Number(product.id),
         name: product.name,
@@ -112,8 +110,8 @@ const ProductPage: React.FC = () => {
       }];
       
       localStorage.setItem('superGritCart', JSON.stringify(updated));
-      setCartItems(updated); // THIS line forces the button word to instantly change to "Go to Cart"
-      window.dispatchEvent(new Event('cartUpdated')); // Tell the Header badge to update
+      setCartItems(updated); 
+      window.dispatchEvent(new Event('cartUpdated')); 
     }
   };
 
