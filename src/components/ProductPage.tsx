@@ -26,7 +26,7 @@ const ProductPage: React.FC = () => {
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // 1. NEW ADDITION: Always scroll to top when page loads or product ID changes
+  // Always scroll to top when page loads or product ID changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
@@ -40,7 +40,7 @@ const ProductPage: React.FC = () => {
     }
   };
 
-  // 2. Listen for cart updates just like Homeone does
+  // Listen for cart updates
   useEffect(() => {
     loadCart(); // Initial Load
     window.addEventListener('cartUpdated', loadCart);
@@ -63,35 +63,29 @@ const ProductPage: React.FC = () => {
     );
   }
 
-  // 3. Check if THIS product is already in the cart
   const cartItem = cartItems.find((item: any) => Number(item.id) === Number(product.id));
   const isInCart = !!cartItem;
   
-  // 4. Decide what quantity to show: Cart amount (if added) OR Local amount (if new)
   const displayQuantity = isInCart ? cartItem.quantity : localQuantity;
 
-  // Handle Main Page Quantity & Live Header Sync
   const handleQuantityChange = (type: 'increase' | 'decrease') => {
     if (isInCart) {
-      // IF IN CART: Update localStorage directly (syncs Header instantly!)
       const updated = cartItems.map((item: any) => {
         if (Number(item.id) === Number(product.id)) {
           const newQty = type === 'increase' ? item.quantity + 1 : item.quantity - 1;
           return { ...item, quantity: newQty };
         }
         return item;
-      }).filter((item: any) => item.quantity > 0); // Remove if drops to 0
+      }).filter((item: any) => item.quantity > 0); 
       
       localStorage.setItem('superGritCart', JSON.stringify(updated));
-      setCartItems(updated); // Instantly update local state
-      window.dispatchEvent(new Event('cartUpdated')); // Tell Header to update badge
+      setCartItems(updated); 
+      window.dispatchEvent(new Event('cartUpdated')); 
 
-      // If user completely removes the item by hitting "-", reset local counter to 1
       if (type === 'decrease' && cartItem.quantity === 1) {
         setLocalQuantity(1);
       }
     } else {
-      // IF NOT IN CART: Just update local counter before they click "Add to Cart"
       if (type === 'decrease' && localQuantity > 1) setLocalQuantity(localQuantity - 1);
       else if (type === 'increase') setLocalQuantity(localQuantity + 1);
     }
@@ -221,7 +215,6 @@ const ProductPage: React.FC = () => {
                 onClick={handleAddToCart}
                 className="w-full bg-[#465AE6] hover:bg-[#3F4DB8] text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                {/* Dynamically changes based on cart state */}
                 {isInCart ? 'Go to Cart' : 'Add to Cart'}
               </button>
               <button className="w-full bg-white border border-gray-300 text-gray-800 hover:bg-gray-50 font-medium py-3 rounded-lg transition-colors">
@@ -260,7 +253,8 @@ const ProductPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="text-gray-600 text-sm leading-relaxed max-w-full">
+          {/* ADDED min-h-[160px] HERE to prevent page jumping */}
+          <div className="text-gray-600 text-sm leading-relaxed max-w-full min-h-[160px]">
             {activeTab === 'Description' && (
               <p>
                 {product.description || "Super Grit Organic Pack is a premium herbal alternative designed to help reduce smoking habits. Made with natural ingredients, it delivers a smooth and satisfying experience without tobacco or nicotine. Perfect for those looking to gradually cut down and take control of their habits."}
