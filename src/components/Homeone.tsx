@@ -124,6 +124,7 @@ const Homeone: React.FC = () => {
                     src={product.image} 
                     alt={product.name} 
                     loading="eager" 
+                    fetchPriority="high" /* Added high priority for faster loading */
                     className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${product.bgClass === 'bg-black' ? 'opacity-90' : ''}`} 
                   />
                 </div>
