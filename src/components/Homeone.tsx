@@ -9,9 +9,9 @@ import Footer from './footerTwo'; // Use your specific footer name
 import { products } from './Product';
 
 // Importing your banner images
-import ourbanner from '../assets/OurBanner.png'; 
-import ourbanner2 from '../assets/ourBanner2.png';
-import ourbanner3 from '../assets/ourBanner3.png';
+import ourbanner from '../assets/banner1.png'; 
+import ourbanner2 from '../assets/banner2.png';
+import ourbanner3 from '../assets/banner3.png';
 
 // Define the CartItem interface directly here to fix the import error
 export interface CartItem {
