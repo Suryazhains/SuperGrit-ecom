@@ -4,7 +4,7 @@ import WhiteLogo from '../assets/whitelogo.png';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#4B5FD1] text-white py-16 px-6 lg:px-20 w-full font-sans">
+    <footer className="bg-[#1f4c31] text-white py-16 px-6 lg:px-20 w-full font-sans">
       <div className="max-w-7xl mx-auto">
         
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 md:gap-16 pb-12">
@@ -16,32 +16,34 @@ const Footer: React.FC = () => {
             <img 
               src={WhiteLogo} 
               alt="Super Grit Logo" 
-              className="h-10 mb-5 object-contain" // Adjust 'h-10' (height) to match your Figma specs
+              className="h-20 md:h-24 mb-5 object-contain" // Increased logo size
             />
             
-            <p className="text-white/90 leading-relaxed text-base sm:text-lg">
+            {/* Text color changed to solid white */}
+            <p className="text-white leading-relaxed text-base sm:text-lg">
               Empowering individuals to reduce<br className="hidden sm:block" />
               smoking through habit control,<br className="hidden sm:block" />
               mindfulness, and healthier alternatives.
             </p>
           </div>
 
-          {/* ... (Rest of the Links and Copyright code remains exactly the same) ... */}
           <div className="flex flex-row gap-16 md:gap-24 lg:gap-32 pr-0 lg:pr-10">
           
             <div>
               <h3 className="font-semibold text-lg mb-5 text-white">Connect</h3>
-              <ul className="space-y-3.5 text-sm sm:text-base text-white/80">
-                <li><a href="#support" className="hover:text-white transition-colors duration-200">Support</a></li>
-                <li><a href="#privacy" className="hover:text-white transition-colors duration-200">Privacy Policy</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors duration-200">Terms of Service</a></li>
+              {/* Text color changed to solid white */}
+              <ul className="space-y-3.5 text-sm sm:text-base text-white">
+                <li><a href="#support" className="hover:text-gray-200 transition-colors duration-200">Support</a></li>
+                <li><a href="#privacy" className="hover:text-gray-200 transition-colors duration-200">Privacy Policy</a></li>
+                <li><a href="#terms" className="hover:text-gray-200 transition-colors duration-200">Terms of Service</a></li>
               </ul>
             </div>
           </div>
         </div>
 
         <div className="border-t border-white/20 pt-8">
-          <p className="text-center text-sm sm:text-base text-white/80">
+          {/* Text color changed to solid white */}
+          <p className="text-center text-sm sm:text-base text-white">
             © 2026 Super Grit. Supporting healthier habits and mindful choices.
           </p>
         </div>

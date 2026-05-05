@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // 1. Importing the Header and Footer components
 import Header from './Header'; 
-import Footer from './footerTwo'; // Use your specific footer name
+import Footer from './footer'; // Use your specific footer name
 
 // 2. Importing your dynamic product data
 import { products } from './Product';
@@ -107,7 +107,7 @@ const Homeone: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#BBCEFF] font-sans flex flex-col relative">
+    <div className="min-h-screen bg-[#e1ffb1] font-sans flex flex-col relative">
       <Header />
       
       <main className="flex-grow w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 flex flex-col gap-10 md:gap-14">
@@ -158,20 +158,20 @@ const Homeone: React.FC = () => {
                   />
                 </div>
                 
-                <h3 className="text-[1.1rem] font-bold text-[#1A1A1A] mb-2 group-hover:text-[#465AE6] transition-colors">{product.name}</h3>
+                <h3 className="text-[1.1rem] font-bold text-[#1A1A1A] mb-2 group-hover:text-[#1f4c31] transition-colors">{product.name}</h3>
                 <p className="text-[13px] text-[#4A5565] mb-6 leading-relaxed flex-grow pr-4 line-clamp-2">{product.description}</p>
                 
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
                   
                   {inCart ? (
-                    <div className="flex items-center border-2 border-[#465AE6] rounded-lg bg-white overflow-hidden h-[42px]" onClick={(e) => e.stopPropagation()}>
-                      <button onClick={(e) => updateCartQuantity(e, product.id, 'decrease')} className="w-10 h-full flex items-center justify-center text-[#465AE6] hover:bg-[#EEF2FF] font-bold text-lg">-</button>
+                    <div className="flex items-center border-2 border-[#1f4c31] rounded-lg bg-white overflow-hidden h-[42px]" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={(e) => updateCartQuantity(e, product.id, 'decrease')} className="w-10 h-full flex items-center justify-center text-[#1f4c31] hover:bg-[#EEF2FF] font-bold text-lg">-</button>
                       <span className="w-8 text-center font-bold text-gray-900 text-sm">{cartItem.quantity}</span>
-                      <button onClick={(e) => updateCartQuantity(e, product.id, 'increase')} className="w-10 h-full flex items-center justify-center text-[#465AE6] hover:bg-[#EEF2FF] font-bold text-lg">+</button>
+                      <button onClick={(e) => updateCartQuantity(e, product.id, 'increase')} className="w-10 h-full flex items-center justify-center text-[#1f4c31] hover:bg-[#EEF2FF] font-bold text-lg">+</button>
                     </div>
                   ) : (
-                    <button onClick={(e) => handleCartAction(e, product)} className="bg-[#4B5FD1] hover:bg-[#3F4DB8] text-white text-sm font-medium py-2.5 px-6 rounded-lg transition-colors h-[42px] flex items-center justify-center">
+                    <button onClick={(e) => handleCartAction(e, product)} className="bg-[#1f4c31] hover:bg-[#1f4c31] text-white text-sm font-medium py-2.5 px-6 rounded-lg transition-colors h-[42px] flex items-center justify-center">
                       Add to Cart
                     </button>
                   )}

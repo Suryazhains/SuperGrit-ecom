@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SuperGritLogo from '../assets/Super Grit.svg'; // Make sure this path matches your logo location
+import SuperGritLogo from '../assets/Super Grit.png'; // Make sure this path matches your logo location
 
 export interface CartItem {
   id: number;
@@ -82,7 +82,7 @@ const Header: React.FC = () => {
         
         {/* Logo Section */}
         <div className="flex-shrink-0 cursor-pointer" onClick={() => window.location.href = '/'}>
-           <img src={SuperGritLogo} alt="Super Grit Logo" className="h-8 md:h-10 object-contain" /> 
+           <img src={SuperGritLogo} alt="Super Grit Logo" className="h-12 md:h-17 object-contain" /> 
         </div>
 
         {/* Cart Button Section */}

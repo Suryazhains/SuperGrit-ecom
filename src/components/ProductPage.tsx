@@ -58,7 +58,7 @@ const ProductPage: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
         <h1 className="text-3xl font-bold mb-4">Product Not Found</h1>
-        <button onClick={() => navigate('/')} className="text-[#465AE6] underline">Return Home</button>
+        <button onClick={() => navigate('/')} className="text-[#1f4c31] underline">Return Home</button>
       </div>
     );
   }
@@ -122,7 +122,7 @@ const ProductPage: React.FC = () => {
         {/* Back Button */}
         <button 
           onClick={() => navigate('/')} 
-          className="flex items-center gap-2 text-gray-500 hover:text-[#465AE6] transition-colors mb-8 font-medium text-sm w-max"
+          className="flex items-center gap-2 text-gray-500 hover:text-[#1f4c31] transition-colors mb-8 font-medium text-sm w-max"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -144,7 +144,7 @@ const ProductPage: React.FC = () => {
                   key={idx}
                   onClick={() => setMainImg(img)}
                   className={`aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all bg-black ${
-                    mainImg === img ? 'border-[#465AE6]' : 'border-transparent hover:border-gray-300'
+                    mainImg === img ? 'border-[#1f4c31]' : 'border-transparent hover:border-gray-300'
                   } flex items-center justify-center`}
                 >
                   <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
@@ -186,7 +186,8 @@ const ProductPage: React.FC = () => {
               )}
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-[#Eef2ff] text-[#465AE6] text-xs font-medium px-2.5 py-1 rounded w-max mb-5">
+            {/* Adjusted the light blue background to a light green one */}
+            <div className="inline-flex items-center gap-2 bg-[#eaf2ed] text-[#1f4c31] text-xs font-medium px-2.5 py-1 rounded w-max mb-5">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 12V22H4V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M22 7H2V12H22V7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -213,7 +214,7 @@ const ProductPage: React.FC = () => {
             <div className="flex flex-col gap-2.5 mb-3">
               <button 
                 onClick={handleAddToCart}
-                className="w-full bg-[#465AE6] hover:bg-[#3F4DB8] text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#1f4c31] hover:bg-[#163824] text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 {isInCart ? 'Go to Cart' : 'Add to Cart'}
               </button>
@@ -242,12 +243,12 @@ const ProductPage: React.FC = () => {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`pb-3 text-sm font-medium relative transition-colors ${
-                  activeTab === tab ? 'text-[#4B5FD1]' : 'text-gray-500 hover:text-gray-900'
+                  activeTab === tab ? 'text-[#1f4c31]' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
                 {tab}
                 {activeTab === tab && (
-                  <span className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-[#465AE6]"></span>
+                  <span className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-[#1f4c31]"></span>
                 )}
               </button>
             ))}
