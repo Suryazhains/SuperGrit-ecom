@@ -69,37 +69,47 @@ const ProductPage: React.FC = () => {
   const displayQuantity = isInCart ? cartItem.quantity : localQuantity;
 
   const handleQuantityChange = (type: 'increase' | 'decrease') => {
-    if (isInCart) {
-      // PREVENT DECREASING BELOW 1
-      if (type === 'decrease' && cartItem.quantity <= 1) {
+    // Read directly from localStorage to prevent any stale state bugs
+    const currentCart = JSON.parse(localStorage.getItem('superGritCart') || '[]');
+    const cartItemIndex = currentCart.findIndex((item: any) => Number(item.id) === Number(product.id));
+
+    if (cartItemIndex > -1) {
+      // Item IS in the cart
+      const currentQty = currentCart[cartItemIndex].quantity;
+      
+      // Prevent decreasing below 1
+      if (type === 'decrease' && currentQty <= 1) {
         return; 
       }
 
-      const updated = cartItems.map((item: any) => {
-        if (Number(item.id) === Number(product.id)) {
-          const newQty = type === 'increase' ? item.quantity + 1 : item.quantity - 1;
-          return { ...item, quantity: newQty };
-        }
-        return item;
-      });
+      // Update quantity
+      const newQty = type === 'increase' ? currentQty + 1 : currentQty - 1;
+      currentCart[cartItemIndex].quantity = newQty;
       
-      localStorage.setItem('superGritCart', JSON.stringify(updated));
-      setCartItems(updated); 
+      localStorage.setItem('superGritCart', JSON.stringify(currentCart));
+      setCartItems(currentCart); 
       window.dispatchEvent(new Event('cartUpdated')); 
     } else {
-      if (type === 'decrease' && localQuantity > 1) {
-        setLocalQuantity(localQuantity - 1);
-      } else if (type === 'increase') {
-        setLocalQuantity(localQuantity + 1);
+      // Item is NOT in the cart yet (update local quantity only)
+      if (type === 'increase') {
+        setLocalQuantity(prev => prev + 1);
+      } else if (type === 'decrease' && localQuantity > 1) {
+        setLocalQuantity(prev => prev - 1);
       }
     }
   };
 
   const handleAddToCart = () => {
-    if (isInCart) {
+    // Read directly from localStorage to guarantee accurate check
+    const currentCart = JSON.parse(localStorage.getItem('superGritCart') || '[]');
+    const alreadyInCart = currentCart.find((item: any) => Number(item.id) === Number(product.id));
+
+    if (alreadyInCart) {
+      // If already in cart, just open the drawer
       window.dispatchEvent(new Event('openCartDrawer'));
     } else {
-      const updated = [...cartItems, {
+      // If not in cart, add it
+      const updated = [...currentCart, {
         id: Number(product.id),
         name: product.name,
         price: Number(product.price),
@@ -110,6 +120,9 @@ const ProductPage: React.FC = () => {
       localStorage.setItem('superGritCart', JSON.stringify(updated));
       setCartItems(updated); 
       window.dispatchEvent(new Event('cartUpdated')); 
+      
+      // Optionally auto-open cart immediately upon adding:
+      // window.dispatchEvent(new Event('openCartDrawer'));
     }
   };
 
