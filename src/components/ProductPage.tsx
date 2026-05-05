@@ -70,24 +70,28 @@ const ProductPage: React.FC = () => {
 
   const handleQuantityChange = (type: 'increase' | 'decrease') => {
     if (isInCart) {
+      // PREVENT DECREASING BELOW 1
+      if (type === 'decrease' && cartItem.quantity <= 1) {
+        return; 
+      }
+
       const updated = cartItems.map((item: any) => {
         if (Number(item.id) === Number(product.id)) {
           const newQty = type === 'increase' ? item.quantity + 1 : item.quantity - 1;
           return { ...item, quantity: newQty };
         }
         return item;
-      }).filter((item: any) => item.quantity > 0); 
+      });
       
       localStorage.setItem('superGritCart', JSON.stringify(updated));
       setCartItems(updated); 
       window.dispatchEvent(new Event('cartUpdated')); 
-
-      if (type === 'decrease' && cartItem.quantity === 1) {
-        setLocalQuantity(1);
-      }
     } else {
-      if (type === 'decrease' && localQuantity > 1) setLocalQuantity(localQuantity - 1);
-      else if (type === 'increase') setLocalQuantity(localQuantity + 1);
+      if (type === 'decrease' && localQuantity > 1) {
+        setLocalQuantity(localQuantity - 1);
+      } else if (type === 'increase') {
+        setLocalQuantity(localQuantity + 1);
+      }
     }
   };
 
@@ -186,7 +190,6 @@ const ProductPage: React.FC = () => {
               )}
             </div>
 
-            {/* Adjusted the light blue background to a light green one */}
             <div className="inline-flex items-center gap-2 bg-[#eaf2ed] text-[#1f4c31] text-xs font-medium px-2.5 py-1 rounded w-max mb-5">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 12V22H4V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -254,7 +257,6 @@ const ProductPage: React.FC = () => {
             ))}
           </div>
 
-          {/* ADDED min-h-[160px] HERE to prevent page jumping */}
           <div className="text-gray-600 text-sm leading-relaxed max-w-full min-h-[160px]">
             {activeTab === 'Description' && (
               <p>
